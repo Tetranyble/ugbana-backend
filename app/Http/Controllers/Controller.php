@@ -55,7 +55,7 @@ use Illuminate\Support\Facades\Response;
  *
  * @OA\Server(
  *     description="Ugbanawaji API Live Server",
- *     url="https://api.ugabanwaji.com/api/v1"
+ *     url="https://api.ugabanawaji.com/api/v1"
  * )
  * @OA\Server(
  *     description="Ugbanawaji API Local Server. This server is attached to the local environment.",
