@@ -20,7 +20,7 @@
     },
     "servers": [
         {
-            "url": "https://api.ugabanawaji.com/api/v1",
+            "url": "https://api.ugbanawaji.com/api/v1",
             "description": "Ugbanawaji API Live Server"
         },
         {
