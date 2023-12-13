@@ -5,7 +5,7 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'Interview Management API',
+                'title' => 'Ugbanawaji API Play Ground',
             ],
 
             'routes' => [
