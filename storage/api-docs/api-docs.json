@@ -90,6 +90,336 @@
                 }
             }
         },
+        "/users/profile/password": {
+            "patch": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "Update user password",
+                "description": "Update user password",
+                "operationId": "ProfilePhotoController::store",
+                "requestBody": {
+                    "description": "Update user password resource",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "current_password": "leonard",
+                                "password": "syndication_confirmation£",
+                                "password_confirmation": "syndication_confirmation£"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The user rehydrated profile record is return with affected fields.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": "success",
+                                    "data": {
+                                        "firstname": "Ugbanawaji",
+                                        "middlename": "Leonard",
+                                        "lastname": "Ekenekiso",
+                                        "phone": "+23480666077**",
+                                        "email": "leonard@hardeverse.org",
+                                        "photo": "http://localhost:8000/storage/images/DU8Y739YQWHDLKuhluwqehdluiwked.png",
+                                        "id": 24,
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/users/destroy": {
+            "delete": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "Logout current user",
+                "description": "Delete Account",
+                "operationId": "APi/DestroyAccountController::__invoke",
+                "responses": {
+                    "204": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/email/verification-notification": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Attempts to resend verification code.",
+                "description": "Attempts to resend verification code.",
+                "operationId": "EmailVerificationNotificationCodeController::__invoke",
+                "requestBody": {
+                    "description": "The user re-verification re-try.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "email": "test@verited.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": "success",
+                                    "status_code": 200,
+                                    "data": []
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout current user",
+                "description": "Logout current user",
+                "operationId": "APi/LogoutController::__invoke",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/users/phone/verification": {
+            "post": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "The user phone verification.",
+                "description": "The user phone verification.",
+                "operationId": "Api/PhoneVerificationController::store",
+                "requestBody": {
+                    "description": "The user phone number to verify.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "phone": "+23480666077**"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": {
+                                        "firstname": "Ugbanawaji",
+                                        "lastname": "Ekenekiso",
+                                        "phone": "+23480666077**",
+                                        "email": "test@verited.com",
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/users/phone/verify": {
+            "post": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "The user phone verification.",
+                "description": "The user phone verification.",
+                "operationId": "Api/PhoneVerificationController::verify",
+                "requestBody": {
+                    "description": "The code sent to the user phone number.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "code": "373973"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": {
+                                        "firstname": "Ugbanawaji",
+                                        "lastname": "Ekenekiso",
+                                        "phone": "+23480666077**",
+                                        "email": "test@verited.com",
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/users/profile": {
             "get": {
                 "tags": [
@@ -124,6 +454,78 @@
                     },
                     "403": {
                         "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "Update user profile",
+                "description": "Update basic user informations.",
+                "operationId": "Api/UpdateProfileController::__invoke",
+                "requestBody": {
+                    "description": "Update user profile basic information.",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfileRequest"
+                            },
+                            "example": {
+                                "firstname": "Ugbanawaji",
+                                "middlename": "Leonard",
+                                "lastname": "Ekenekiso",
+                                "experience": "the quick brown fox profile update",
+                                "introduction": "the quick brown fox profile update",
+                                "email": "l.ekenekiso@ugbanawaji.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The user rehydrated profile record is return with affected fields.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": "success",
+                                    "status_code": 200,
+                                    "data": {
+                                        "firstname": "Ugbanawaji",
+                                        "middlename": "Leonard",
+                                        "lastname": "Ekenekiso",
+                                        "phone": "+23480666077**",
+                                        "email": "leonard@hardeverse.org",
+                                        "path": "http://localhost:8000/storage/images/DU8Y739YQWHDLKuhluwqehdluiwked.png",
+                                        "id": 24,
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
                     },
                     "404": {
                         "$ref": "#/components/responses/404"
@@ -211,6 +613,117 @@
                 ]
             }
         },
+        "/users/profile-photo": {
+            "post": {
+                "tags": [
+                    "Profiles"
+                ],
+                "summary": "Update user profile photo",
+                "description": "Update user profile photo",
+                "operationId": "ProfilePhotoController::__invoke",
+                "requestBody": {
+                    "description": "upload user profile photo",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProfilePhotoRequest"
+                            },
+                            "example": {
+                                "photo": "Ugbanawaji"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The user rehydrated profile record is return with affected fields.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": "success",
+                                    "status_code": 200,
+                                    "data": {
+                                        "disk": "s3-public",
+                                        "path": "http://localhost:8000/storage/images/DU8Y739YQWHDLKuhluwqehdluiwked.png",
+                                        "id": 24
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/users/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh authenticated user's token",
+                "description": "Attempts to refresh user's access token",
+                "operationId": "APi/RefreshTokenController::__invoke",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": {
+                                        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vdmVyaXRlZC50ZXN0L2FwaS92MS9sb2dpbiIsImlhdCI6MTY5NzI3NTMwOSwiZXhwIjoxNjk3Mjc4OTA5LCJuYmYiOjE2OTcyNzUzMDksImp0aSI6IjZBYmN0ZEJUaU9tY1RKemYiLCJzdWIiOiI1MSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJkYXRhIjp7ImlkIjo1MSwiZmlyc3RuYW1lIjoiQWx2YSIsIm1pZGRsZW5hbWUiOiJQZmVmZmVyIiwibGFzdG5hbWUiOiJDYXNwZXIiLCJ1c2VybmFtZSI6bnVsbCwiYmlvIjoiTW9sZXN0aWFlIGV4IHBlcmZlcmVuZGlzIHBlcnNwaWNpYXRpcyBoaWMgdW5kZS4iLCJpbnRyb2R1Y3Rpb24iOiJQbGFjZWF0IGN1bHBhIGVhIHJlY3VzYW5kYWUgbWFnbmFtIHNlZCB1dC4iLCJleHBlcmllbmNlIjoiRXhlcmNpdGF0aW9uZW0gZHVjaW11cyBkb2xvciBuaWhpbCBxdWlhIGFzcGVybmF0dXIuIiwiaW1hZ2UiOiIvc3RvcmFnZS9pbWFnZXMvMTE2YzI3MDgtZWE5OC00ODNiLWE5ZDAtNmQ4NWNkZWM0YjJkLTIwMjMtMDgtMTQtMTEtNDEtNTUuanBlZyIsInJvbGUiOiJTdHVkZW50Iiwicm9sZXMiOlt7ImlkIjoyLCJuYW1lIjoic3R1ZGVudCIsImxhYmVsIjoiU3R1ZGVudCJ9LHsiaWQiOjY5LCJuYW1lIjoidXQiLCJsYWJlbCI6IlV0In1dfX0.7gYWPr0VVFpBOyYKPO8qjfvEr09p8nwF8it-hGwM8Xk",
+                                        "token_type": "bearer",
+                                        "expires_in": "3600"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/signup": {
             "post": {
                 "tags": [
@@ -228,14 +741,11 @@
                                 "$ref": "#/components/schemas/RegistrationRequest"
                             },
                             "example": {
-                                "name": "Ugbanawaji Ekenekiso",
-                                "email": "e.ugabanwaji@interview.com",
+                                "firstname": "Ugbanawaji",
+                                "lastname": "Ekenekiso",
+                                "email": "test@ugbanawaji.com",
                                 "password": "password",
-                                "password_confirmation": "password",
-                                "permissions": [
-                                    "userprofile_store",
-                                    "userprofile_show"
-                                ]
+                                "password_confirmation": "password"
                             }
                         }
                     }
@@ -276,6 +786,177 @@
                     }
                 }
             }
+        },
+        "/forgot-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Attempts to reset user credentials.",
+                "description": "Attempts to reset user credentials.",
+                "operationId": "ResetPasswordCodeController::invoke",
+                "requestBody": {
+                    "description": "The user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "example": {
+                                "email": "test@verited.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": []
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        },
+        "/reset-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Attempts to reset user credentials.",
+                "description": "Attempts to reset user credentials.",
+                "operationId": "ResetPasswordController::invoke",
+                "requestBody": {
+                    "description": "The user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResetPasswordRequest"
+                            },
+                            "example": {
+                                "email": "test@verited.com",
+                                "password": "password",
+                                "password_confirmation": "password",
+                                "token": "8937"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": {
+                                        "token": "2|I8yfaWt8rpfViHrY2VAZqUzG8IbxWeW4NMhIj1WQ"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        },
+        "/verify-email/{email}/{code}": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "The user email verification",
+                "description": "The user email verification",
+                "operationId": "VerifyEmailController::_invoke",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "The user email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "The user code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "Email verified successfully!",
+                                    "status": "success",
+                                    "status_code": 200,
+                                    "data": []
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -297,10 +978,44 @@
                 },
                 "type": "object"
             },
+            "GeneralRequest": {
+                "properties": {
+                    "quantity": {
+                        "description": "The number of coourses per page. When not provided it default to 10 courses per page",
+                        "type": "integer"
+                    },
+                    "search": {
+                        "description": "The search term if any. It's completely optional",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ProfilePhotoRequest": {
+                "properties": {
+                    "photo": {
+                        "description": "The user profile photo",
+                        "type": "file"
+                    }
+                },
+                "type": "object"
+            },
             "RegistrationRequest": {
                 "properties": {
-                    "name": {
-                        "description": "The user name",
+                    "firstname": {
+                        "description": "The user firstname",
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "description": "The user lastname",
+                        "type": "string"
+                    },
+                    "middlename": {
+                        "description": "The user middlename",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "The user phone number",
                         "type": "string"
                     },
                     "email": {
@@ -314,6 +1029,31 @@
                     "password_confirmation": {
                         "description": "The user password confirmation",
                         "type": "string"
+                    },
+                    "referral": {
+                        "description": "The user referral",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ResetPasswordRequest": {
+                "properties": {
+                    "email": {
+                        "description": "The user email address.",
+                        "type": "string"
+                    },
+                    "token": {
+                        "description": "The user token.",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The user new password.",
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "description": "The user new confirm password.",
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -323,6 +1063,60 @@
                     "resume": {
                         "description": "The user resume",
                         "type": "file"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateProfileRequest": {
+                "properties": {
+                    "firstname": {
+                        "description": "The gender name. Exmaple: male",
+                        "type": "string"
+                    },
+                    "middlename": {
+                        "description": "The middle name",
+                        "type": "string"
+                    },
+                    "lastname": {
+                        "description": "The last name",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "The email address",
+                        "type": "string"
+                    },
+                    "country_id": {
+                        "description": "The user country id. Optional field",
+                        "type": "number"
+                    },
+                    "gender_id": {
+                        "description": "The user gender id. Optional field",
+                        "type": "number"
+                    },
+                    "username": {
+                        "description": "The gender slug. Used to query for the gender",
+                        "type": "string"
+                    },
+                    "phone": {
+                        "description": "The user phone number in international format. Example: A Nigeria phone number should start with +234806660****. Optional field",
+                        "type": "string"
+                    },
+                    "job_title": {
+                        "description": "The user job title",
+                        "type": "string"
+                    },
+                    "birthday": {
+                        "description": "The user birth date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "how_you_heard": {
+                        "description": "How the user heard about Harde",
+                        "type": "string"
+                    },
+                    "other_value": {
+                        "description": "Other channels the user heard about Harde.",
+                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -369,6 +1163,35 @@
                     "created_at": {
                         "description": "The resource created date.",
                         "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Media": {
+                "properties": {
+                    "path": {
+                        "description": "The resource link.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "The resource description.",
+                        "type": "string"
+                    },
+                    "attribution": {
+                        "description": "The resource attribution.",
+                        "type": "string"
+                    },
+                    "mime_type": {
+                        "description": "The resource mime type. RFC 6838.",
+                        "type": "string"
+                    },
+                    "size": {
+                        "description": "The resource file size.",
+                        "type": "string"
+                    },
+                    "current": {
+                        "description": "The resource is default.",
+                        "type": "boolean"
                     }
                 },
                 "type": "object"

@@ -2,7 +2,7 @@
 
 namespace App\services;
 
-use App\Interfaces\PhoneVerificationInterface;
+use App\Interface\PhoneVerificationInterface;
 use App\Models\User;
 use ManeOlawale\Termii\Client;
 
