@@ -64,8 +64,10 @@ Route::get('youtube', function (){
 
     $yt = new YoutubeDl();
     $channel = \App\Models\ChannelVideo::where('uuid', 'oDAw7vW7H0c')->first();
-    $collection = $yt->download(
+    $collection = $yt->setBinPath(config('pensuh.binary.ytdlp'))
+        ->download(
         Options::create()
+
             ->geoByPass()
             ->output('%(id)s.%(ext)s')
             //->noPart(true)

@@ -53,6 +53,7 @@ return [
         'node' => env('NODE_BINARY', '/usr/bin/node'),
         'npm' => env('NPM_BINARY', '/usr/bin/npm'),
         'chrome' => env('CHROME_BINARY', '/usr/bin/google-chrome'),
+        'ytdlp' => env('YOUTUBE_PATH', '/usr/local/bin/yt-dlp'),
     ],
 
 ];

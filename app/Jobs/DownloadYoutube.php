@@ -34,7 +34,7 @@ class DownloadYoutube implements ShouldQueue
     {
         $yt = new YoutubeDl();
 
-        $collection = $yt->download(
+        $collection = $yt->setBinPath(config('pensuh.binary.ytdlp'))->download(
             Options::create()
                 ->geoByPass()
                 ->output('%(id)s.%(ext)s')
