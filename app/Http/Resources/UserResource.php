@@ -42,9 +42,14 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'created_at' => $this->created_at,
+            'username' => $this->username,
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'middlename' => $this->middlename,
+            'referral_link' => $this->referral,
+            'image' => $this->image?->url,
+            'email_verified_at' => $this->hasVerifiedEmail(),
+            'phone_verified_at' => $this->hasVerifiedPhone(),
             $this->mergeWhen($this->relationLoaded('profile'), [
                 'profile' => new UserProfileResource($this->profile),
             ]),

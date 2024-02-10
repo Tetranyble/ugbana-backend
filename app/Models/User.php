@@ -3,17 +3,26 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\StorageProvider;
+use App\Enums\UserStatus;
 use App\Http\Resources\UserResource;
+use App\Traits\ApiMustVerify;
 use App\Traits\HasRoles;
+use App\Traits\Thumbnail;
+use App\Traits\WithAttribute;
+use App\Traits\Youtubeable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, ApiMustVerify,HasFactory, Notifiable,
+        HasRoles, Youtubeable, Thumbnail, WithAttribute;
 
     /**
      * The attributes that are mass assignable.
@@ -21,9 +30,18 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'lastname',
+        'middlename',
+        'firstname',
+        'phone',
         'email',
         'password',
+        'status',
+        'username',
+        'referrer_id',
+        'is_accept_condition',
+        'country',
+        'suspend_at',
     ];
 
     /**
@@ -43,7 +61,10 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
+        'suspend_at' => 'datetime',
         'password' => 'hashed',
+        'status' => UserStatus::class,
     ];
 
     public function getJWTIdentifier()
@@ -62,5 +83,37 @@ class User extends Authenticatable implements JWTSubject
             UserProfile::class,
             'user_id'
         );
+    }
+
+    public function webServices(): HasMany
+    {
+        return $this->hasMany(
+            WebService::class,
+            'user_id'
+        );
+    }
+    public function service(): WebService|null
+    {
+        return $this->webServices()
+            ->where('name', StorageProvider::GOOGLE)
+            ->first();
+    }
+
+    /**
+     * Get user's videos
+     * @return HasMany
+     */
+    public function videos(): HasMany
+    {
+        return $this->hasMany(ChannelVideo::class, 'user_id');
+    }
+
+    /**
+     * Get channels
+     * @return HasMany
+     */
+    public function channels(): HasMany
+    {
+        return $this->hasMany(Channel::class, 'user_id');
     }
 }

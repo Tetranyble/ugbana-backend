@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ApiRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Resources\UserResource;
@@ -28,11 +29,11 @@ class RegistrationController extends Controller
      *         @OA\MediaType(
      *             mediaType="application/json",
      *             example={
-     *                 "name": "Ugbanawaji Ekenekiso",
-     *                 "email" : "e.ugabanwaji@interview.com",
+     *                 "firstname": "Ugbanawaji",
+     *                 "lastname": "Ekenekiso",
+     *                 "email" : "test@ugbanawaji.com",
      *                 "password" : "password",
-     *                 "password_confirmation" : "password",
-     *                  "permissions": {"userprofile_store","userprofile_show"}
+     *                 "password_confirmation" : "password"
      *             },
      *
      *             @OA\Schema(ref="#/components/schemas/RegistrationRequest")
@@ -69,15 +70,16 @@ class RegistrationController extends Controller
      *
      * @return JsonResponse
      */
-    public function __invoke(RegistrationRequest $request)
+    public function __invoke(RegistrationRequest $request): JsonResponse
     {
         $user = User::create($this->filter($request));
+        $user->referredBy($request->referrer);
+        event(new ApiRegistered($user));
 
         $user->assignRoles('user');
-        $this->assignPermission($user, $request->permissions);
         return $this->created(
             new UserResource($user),
-            'success.'
+            'Please verify your email address'
         );
     }
 

@@ -15,8 +15,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
          $user = User::factory()->create([
-             'name' => 'Ekenekiso Ugbanawaji',
-             'email' => 'l.ekenekiso@ugbanawaji.com',
+             'firstname' => 'Ugbanawaji',
+             'lastname' => 'Ekenekiso',
+             'middlename' => 'Leonard',
+             'email' => 'senenerst@gmail.com',
              'password' => 'password'
          ]);
 
@@ -25,5 +27,17 @@ class UserSeeder extends Seeder
              ->create([
                  'user_id' => $user->id
              ]);
+        $user = User::factory()->create([
+            'firstname' => 'Movies',
+            'lastname' => 'Web',
+            'email' => 'movieswebbs@gmail.com',
+            'password' => 'password'
+        ]);
+
+        $user->assignRoles('user');
+        UserProfile::factory()
+            ->create([
+                'user_id' => $user->id
+            ]);
     }
 }

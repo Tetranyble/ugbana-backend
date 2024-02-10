@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+Artisan::command('youtube:download', function (){
+    \App\Models\ChannelVideo::orderBy('id')
+        ->limit(5)
+        ->chunkMap(function ($video){
+            \App\Jobs\DownloadYoutube::dispatch($video);
+        });
+
+});
