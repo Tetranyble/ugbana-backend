@@ -119,14 +119,14 @@ trait Youtubeable
             ]);
     }
 
-    public function upload(Channel $channel,ChannelVideo $video){
+    public function upload(ChannelVideo $video){
         $this->getYoutubeInstance();
         $this->youtube->upload($video->filename,[
             'title' => $video->title,
             'description' => $video->description,
             'tags' => $video->tag,
             'category_id' => $video?->category
-        ],$channel);
+        ]);
     }
 
     public function owesChannel(): Model|Channel|null

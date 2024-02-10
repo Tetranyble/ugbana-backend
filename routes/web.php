@@ -118,13 +118,6 @@ Route::get('channels', function (\App\services\Google\Youtube $youtube){
 });
 
 Route::get('upload', function (){
-    $user = User::where('email','senenerst@gmail.com')->first();
-//    $channel = \App\Models\Channel::where('user_id', $user->id)
-//        ->where('id', 33)
-//        ->first();
-//
-//    return $channel->user->service();
-    $user->upload($user->owesChannel(),
-        \App\Models\ChannelVideo::first()
-    );
+
+    $this->video->user->upload($this->video);
 });

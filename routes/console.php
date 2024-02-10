@@ -25,3 +25,12 @@ Artisan::command('youtube:download', function (){
         });
 
 });
+
+Artisan::command('youtube:upload', function (){
+    $videos = \App\Models\ChannelVideo::orderBy('id')
+        ->limit(5)->get();
+    $videos->map(function ($video){
+        \App\Jobs\YoutubeUpload::dispatch($video);
+    });
+
+});

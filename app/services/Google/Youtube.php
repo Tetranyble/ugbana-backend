@@ -62,7 +62,7 @@ class Youtube
      *
      * @return self
      */
-    public function upload($path, array $data, Channel $channel ,$privacyStatus = 'public')
+    public function upload($path, array $data, $privacyStatus = 'public')
     {
 
         /* ------------------------------------
