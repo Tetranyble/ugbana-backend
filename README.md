@@ -30,7 +30,8 @@ Another server [documentation](https://api.ugbanawaji.com/api/v1/documentation)
 - Or visit the url on Mac System `http://ugbana-backend.test/api/v1/documentation#/`
 
 ##### And that's it. Let's get hacking.
-
+Note: use the test user account `developer@ugbanawaji.com` and password `password`.
+This account has manager privillage to get start
 
 Note: Before starting the local development server ensure you have set up the database connection and the database server is up and running.
 

@@ -17,11 +17,11 @@ class UserSeeder extends Seeder
             'firstname' => 'Ugbanawaji',
             'lastname' => 'Ekenekiso',
             'middlename' => 'Leonard',
-            'email' => 'senenerst@gmail.com',
+            'email' => 'developer@ugbanawaji.com',
             'password' => 'password',
         ]);
 
-        $user->assignRoles('user');
+        $user->assignRoles('manager');
         UserProfile::factory()
             ->create([
                 'user_id' => $user->id,
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'password' => 'password',
         ]);
 
-        $user->assignRoles('user');
+        $user->assignRoles('developer');
         UserProfile::factory()
             ->create([
                 'user_id' => $user->id,
