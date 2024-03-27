@@ -50,7 +50,7 @@ class UserProfileResource extends JsonResource
             'job_experience' => $this->job_experience,
             'skills' => $this->skills,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

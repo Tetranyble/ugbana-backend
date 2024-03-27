@@ -32,6 +32,325 @@
         }
     ],
     "paths": {
+        "/admin/employee": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "The resource collection",
+                "description": "The resource collection",
+                "operationId": "Api/Admin/EmployeeController::index",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search the resource by name or description",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The quantity",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The resource collection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/UserResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Admin create new employee",
+                "description": "Admin create new employee",
+                "operationId": "Api/Admin/EmployeeController::store",
+                "requestBody": {
+                    "description": "Create new user",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            },
+                            "example": {
+                                "firstname": "Ugbanawaji",
+                                "lastname": "Ekenekiso",
+                                "role": "developer",
+                                "email": "test@ugbanawaji.com",
+                                "password": "password",
+                                "password_confirmation": "password"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success.",
+                                    "status": true,
+                                    "data": {
+                                        "firstname": "Ugbanawaji",
+                                        "lastname": "Ekenekiso",
+                                        "email": "test@verited.com",
+                                        "role": "developer",
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                }
+            }
+        },
+        "/admin/employee/{employeeId}": {
+            "get": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "The employee resource",
+                "description": "The employee resource.",
+                "operationId": "Api/Admin/EmployeeController::show",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "The employee id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "The delete employee resource",
+                "description": "The employee resource.",
+                "operationId": "Api/Admin/EmployeeController::destroy",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "The employee id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/employee/employeeId": {
+            "patch": {
+                "tags": [
+                    "Employees"
+                ],
+                "summary": "Update employee profile",
+                "description": "Update basic user informations.",
+                "operationId": "Api/Admin//EmployeeController::update",
+                "parameters": [
+                    {
+                        "name": "employeeId",
+                        "in": "path",
+                        "description": "The employee resource Id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Update employee profile basic information.",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateProfileRequest"
+                            },
+                            "example": {
+                                "firstname": "Ugbanawaji",
+                                "middlename": "Leonard",
+                                "lastname": "Ekenekiso",
+                                "experience": "the quick brown fox profile update",
+                                "introduction": "the quick brown fox profile update",
+                                "email": "l.ekenekiso@ugbanawaji.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The user rehydrated profile record is return with affected fields.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": "success",
+                                    "status_code": 200,
+                                    "data": {
+                                        "firstname": "Ugbanawaji",
+                                        "middlename": "Leonard",
+                                        "lastname": "Ekenekiso",
+                                        "phone": "+23480666077**",
+                                        "email": "leonard@hardeverse.org",
+                                        "path": "http://localhost:8000/storage/images/DU8Y739YQWHDLKuhluwqehdluiwked.png",
+                                        "id": 24,
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [

@@ -1,9 +1,6 @@
 <?php
 
 use App\Models\User;
-use App\services\FileSystem;
-use App\services\ResumeParser;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use YoutubeDl\Options;
 use YoutubeDl\YoutubeDl;
@@ -19,13 +16,11 @@ use YoutubeDl\YoutubeDl;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::get('youtube', function (){
+Route::get('youtube', function () {
 
     $yt = new YoutubeDl();
     //$channel = \App\Models\ChannelVideo::where('uuid', 'oDAw7vW7H0c')->first();
@@ -37,7 +32,7 @@ Route::get('youtube', function (){
                 ->output('%(id)s.%(ext)s')
                 //->noPart(true)
                 ->downloadPath(storage_path('app/public/video/downloads'))
-                ->url("https://www.youtube.com/watch?v=oDAw7vW7H0c")
+                ->url('https://www.youtube.com/watch?v=oDAw7vW7H0c')
         );
 
     foreach ($collection->getVideos() as $video) {
@@ -46,42 +41,43 @@ Route::get('youtube', function (){
         } else {
             return
                 \App\Models\ChannelVideo::create([
-                'tag' => $video->getTags(),
-                'repost_count' => $video->getRepostCount(),
-                'resolution' => $video->getResolution(),
-                'playlist' => $video->getPlaylist(),
-                'playlist_id' => $video->getPlaylistId(),
-                'playlist_index' => $video->getPlaylistIndex(),
-                'view_count' => $video->getViewCount(),
-                'duration' => $video->getDuration(),
-                'filename' => $video->getFilename(),
-                'artist' => $video->getArtist(),
+                    'tag' => $video->getTags(),
+                    'repost_count' => $video->getRepostCount(),
+                    'resolution' => $video->getResolution(),
+                    'playlist' => $video->getPlaylist(),
+                    'playlist_id' => $video->getPlaylistId(),
+                    'playlist_index' => $video->getPlaylistIndex(),
+                    'view_count' => $video->getViewCount(),
+                    'duration' => $video->getDuration(),
+                    'filename' => $video->getFilename(),
+                    'artist' => $video->getArtist(),
                     'user_id' => 1,
                     'uuid' => \Illuminate\Support\Str::uuid()->toString().'-1',
-            ]);
+                ]);
 
         }
     }
+
     return 'done';
 });
 
-Route::get('channel', function (\App\services\Google\Youtube $youtube){
-
+Route::get('channel', function (\App\services\Google\Youtube $youtube) {
 
     return auth('web')->user()->storeSearch([
         'q' => 'nollywood movies',
         'type' => 'video',
     ]);
 })->middleware('auth');
-Route::get('channels', function (\App\services\Google\Youtube $youtube){
+Route::get('channels', function (\App\services\Google\Youtube $youtube) {
 
     return $channels = auth('web')->user()->load('channels');
-    $user = User::where('email','senenerst@gmail.com')->with('channels')->first();
+    $user = User::where('email', 'senenerst@gmail.com')->with('channels')->first();
     $channelsUUid = $user->channels->pluck('uuid')->implode(',');
+
     return $user->storeChannels($channelsUUid);
 });
 
-Route::get('upload', function (){
+Route::get('upload', function () {
     $user = auth('web')->user();
     $user->upload(\App\Models\ChannelVideo::first());
 });
@@ -93,7 +89,7 @@ Route::get('/dashboard', function () {
  * Cloud storage Authentication Routes
  * Example Google Drive,
  */
-Route::middleware('auth')->prefix('services')->group( function () {
+Route::middleware('auth')->prefix('services')->group(function () {
     Route::get('connect/{service}', [\App\Http\Controllers\Api\ServiceAuthenticationController::class, 'connect'])
         ->name('services.connect');
 

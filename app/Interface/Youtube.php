@@ -14,10 +14,9 @@ interface Youtube
     /**
      * Upload the video to YouTube
      *
-     * @param  string   $path           The path to the file you wish to upload.
-     * @param  array    $data           An array of data.
-     * @param  string   $privacyStatus  The status of the uploaded video, set to 'public' by default.
-     *
+     * @param  string  $path  The path to the file you wish to upload.
+     * @param  array  $data  An array of data.
+     * @param  string  $privacyStatus  The status of the uploaded video, set to 'public' by default.
      * @return self
      */
     public function upload($path, array $data, $privacyStatus = 'public');
@@ -26,7 +25,6 @@ interface Youtube
      * Set a Custom Thumbnail for the Upload
      *
      * @param  string  $imagePath
-     *
      * @return self
      */
     public function withThumbnail($imagePath);
@@ -49,7 +47,6 @@ interface Youtube
      * Delete a YouTube video by it's ID.
      *
      * @param  int  $id
-     *
      * @return bool
      */
     public function delete($id);
@@ -58,7 +55,6 @@ interface Youtube
      * Check if a YouTube video exists by it's ID.
      *
      * @param  int  $id
-     *
      * @return bool
      */
     public function exists($id);

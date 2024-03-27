@@ -20,7 +20,7 @@ trait EnumOperation
     }
 
     /**
-     * @param  string  $enum Example: DocumentStatus::class
+     * @param  string  $enum  Example: DocumentStatus::class
      */
     public static function exists(string $name): bool
     {

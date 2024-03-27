@@ -4,5 +4,4 @@ namespace App\Interface;
 
 interface ResumeParserInterface
 {
-
 }

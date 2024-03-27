@@ -162,8 +162,6 @@ return [
          * Package Service Providers...
          */
 
-
-
         /*
          * Application Service Providers...
          */
@@ -173,7 +171,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \App\Providers\GoogleClientServiceProvider::class,
-        PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class
+        PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
     ])->toArray(),
 
     /*

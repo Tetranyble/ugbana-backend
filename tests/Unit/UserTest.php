@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Enums\UserStatus;
-use App\Models\Employment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -135,5 +134,4 @@ class UserTest extends TestCase
 
         $this->assertEquals($is_accept_condition, $user->is_accept_condition);
     }
-
 }

@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Enums\StorageProvider;
 use App\Jobs\SynchronizeCalendars;
 use App\Jobs\WatchCalendars;
-use App\Traits\TokenService;
 use App\Traits\Synchronizable;
+use App\Traits\TokenService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WebService extends Model
 {
-    use HasFactory, TokenService,
-        Synchronizable;
+    use HasFactory, Synchronizable,
+        TokenService;
 
     protected $fillable = [
         'name',

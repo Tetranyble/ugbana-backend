@@ -13,7 +13,7 @@ class UserProfile extends Model
         'education',
         'job_experience',
         'skills',
-        'user_id'
+        'user_id',
     ];
 
     protected $casts = [
@@ -22,7 +22,8 @@ class UserProfile extends Model
         'skills' => 'array',
     ];
 
-    public function profile(){
+    public function profile()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 }

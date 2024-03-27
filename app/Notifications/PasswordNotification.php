@@ -17,7 +17,7 @@ class PasswordNotification extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param $token
+     * @param  $token
      */
     public function __construct(User $user)
     {

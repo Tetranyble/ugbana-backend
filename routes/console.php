@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Process;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,27 +14,31 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
-Artisan::command('youtube:download', function (){
+Artisan::command('pint:clean', function () {
+    $this->comment('Reformat and remove unused imports...');
+    Process::run('php ./vendor/bin/pint', function (string $type, string $output) {
+        echo $output;
+    });
+    $this->comment('Done!');
+})->describe('Reformat and remove unused import.');
+Artisan::command('youtube:download', function () {
     \App\Models\ChannelVideo::orderBy('id')
         ->where('user_id', 1)
-        ->chunkMap(function ($video){
+        ->chunkMap(function ($video) {
             \App\Jobs\DownloadYoutube::dispatch($video);
-        },10);
-//    \App\Jobs\DownloadYoutube::dispatch(
-//        \App\Models\ChannelVideo::first()
-//    );
+        }, 10);
+    //    \App\Jobs\DownloadYoutube::dispatch(
+    //        \App\Models\ChannelVideo::first()
+    //    );
 
 });
 
-Artisan::command('youtube:upload', function (){
-//    $videos = \App\Models\ChannelVideo::orderBy('id')
-//        ->limit(5)->get();
-//    $videos->map(function ($video){
-//        \App\Jobs\YoutubeUpload::dispatch($video);
-//    });
+Artisan::command('youtube:upload', function () {
+    //    $videos = \App\Models\ChannelVideo::orderBy('id')
+    //        ->limit(5)->get();
+    //    $videos->map(function ($video){
+    //        \App\Jobs\YoutubeUpload::dispatch($video);
+    //    });
     \App\Jobs\YoutubeUpload::dispatch(
         \App\Models\ChannelVideo::find(101)
     );

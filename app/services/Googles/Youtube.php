@@ -5,18 +5,14 @@ namespace App\services\Googles;
 use App\Enums\StorageProvider;
 use App\Models\Channel;
 use App\Models\WebService;
-use Carbon\Carbon;
 use Google\Client;
 use Google\Service\Exception;
-use Google\Service\YouTube\SearchListResponse;
-use Illuminate\Support\Facades\DB;
 
 class Youtube
 {
-    /** @var Client  */
     protected Client $client;
 
-    /** @var \Google_Service_YouTube  */
+    /** @var \Google_Service_YouTube */
     protected $youtube;
 
     private $videoId;
@@ -25,8 +21,6 @@ class Youtube
 
     /**
      * Constructor accepts the Google Client object, whilst setting the configuration options.
-     *
-     * @param  Client  $client
      */
     public function __construct(Client $client)
     {
@@ -34,21 +28,21 @@ class Youtube
         $this->client->setApplicationName(config('youtube.application_name'));
 
         $this->youtube = new \Google_Service_YouTube($this->client);
-//
-//        if ($accessToken = $this->getLatestAccessTokenFromDB()) {
-//            $this->client->setAccessToken($accessToken);
-//        }
+        //
+        //        if ($accessToken = $this->getLatestAccessTokenFromDB()) {
+        //            $this->client->setAccessToken($accessToken);
+        //        }
     }
-
-
 
     /**
      * Returns the last saved access token, if there is one, or null
+     *
      * @return mixed
      */
     public function getLatestAccessTokenFromDB()
     {
         $service = WebService::where('name', StorageProvider::GOOGLE)->first();
+
         return $service ? $service->token : null;
         //return $latest ? (is_array($latest) ? $latest['access_token'] : $latest->access_token ) : null;
     }
@@ -56,10 +50,9 @@ class Youtube
     /**
      * Upload the video to YouTube
      *
-     * @param  string   $path           The path to the file you wish to upload.
-     * @param  array    $data           An array of data.
-     * @param  string   $privacyStatus  The status of the uploaded video, set to 'public' by default.
-     *
+     * @param  string  $path  The path to the file you wish to upload.
+     * @param  array  $data  An array of data.
+     * @param  string  $privacyStatus  The status of the uploaded video, set to 'public' by default.
      * @return self
      */
     public function upload($path, array $data, $privacyStatus = 'public')
@@ -70,10 +63,18 @@ class Youtube
         ------------------------------------ */
         $snippet = new \Google_Service_YouTube_VideoSnippet();
 
-        if (array_key_exists('title', $data))       $snippet->setTitle($data['title']);
-        if (array_key_exists('description', $data)) $snippet->setDescription($data['description']);
-        if (array_key_exists('tags', $data))        $snippet->setTags($data['tags']);
-        if (array_key_exists('category_id', $data)) $snippet->setCategoryId($data['category_id']);
+        if (array_key_exists('title', $data)) {
+            $snippet->setTitle($data['title']);
+        }
+        if (array_key_exists('description', $data)) {
+            $snippet->setDescription($data['description']);
+        }
+        if (array_key_exists('tags', $data)) {
+            $snippet->setTags($data['tags']);
+        }
+        if (array_key_exists('category_id', $data)) {
+            $snippet->setCategoryId($data['category_id']);
+        }
 
         /* ------------------------------------
         #. Set the Privacy Status
@@ -101,9 +102,9 @@ class Youtube
         /* ------------------------------------
         #. Build the request
         ------------------------------------ */
-        $insert = $this->youtube->videos->insert('status,snippet', $video,[
-           //'onBehalfOfContentOwner' => 'wwSX8QxQGf3hB3EDQdACzQ',//$channel->user->service()?->client_id, //*Note:* This parameter is intended
-           //'onBehalfOfContentOwnerChannel' => 'UCwwSX8QxQGf3hB3EDQdACzQ',//$channel->uuid, // This parameter can only be
+        $insert = $this->youtube->videos->insert('status,snippet', $video, [
+            //'onBehalfOfContentOwner' => 'wwSX8QxQGf3hB3EDQdACzQ',//$channel->user->service()?->client_id, //*Note:* This parameter is intended
+            //'onBehalfOfContentOwnerChannel' => 'UCwwSX8QxQGf3hB3EDQdACzQ',//$channel->uuid, // This parameter can only be
         ]);
 
         /* ------------------------------------
@@ -127,9 +128,9 @@ class Youtube
         #. Read the file and upload in chunks
         ------------------------------------ */
         $status = false;
-        $handle = fopen($path, "rb");
+        $handle = fopen($path, 'rb');
 
-        while (!$status && !feof($handle)) {
+        while (! $status && ! feof($handle)) {
             $chunk = fread($handle, $chunkSize);
             $status = $media->nextChunk($chunk);
         }
@@ -137,7 +138,6 @@ class Youtube
         fclose($handle);
 
         $this->client->setDefer(false);
-
 
         /* ------------------------------------
         #. Set the Uploaded Video ID
@@ -151,10 +151,9 @@ class Youtube
      * Set a Custom Thumbnail for the Upload
      *
      * @param  string  $imagePath
-     *
      * @return self
      */
-    function withThumbnail($imagePath)
+    public function withThumbnail($imagePath)
     {
         try {
             $videoId = $this->getVideoId();
@@ -185,9 +184,9 @@ class Youtube
 
             // Read the media file and upload it chunk by chunk.
             $status = false;
-            $handle = fopen($imagePath, "rb");
-            while (!$status && !feof($handle)) {
-                $chunk  = fread($handle, $chunkSizeBytes);
+            $handle = fopen($imagePath, 'rb');
+            while (! $status && ! feof($handle)) {
+                $chunk = fread($handle, $chunkSizeBytes);
                 $status = $media->nextChunk($chunk);
             }
             fclose($handle);
@@ -197,9 +196,9 @@ class Youtube
             $this->thumbnailUrl = $status['items'][0]['default']['url'];
 
         } catch (\Google_Service_Exception $e) {
-            die($e->getMessage());
+            exit($e->getMessage());
         } catch (\Google_Exception $e) {
-            die($e->getMessage());
+            exit($e->getMessage());
         }
 
         return $this;
@@ -210,7 +209,7 @@ class Youtube
      *
      * @return string
      */
-    function getVideoId()
+    public function getVideoId()
     {
         return $this->videoId;
     }
@@ -220,7 +219,7 @@ class Youtube
      *
      * @return string
      */
-    function getThumbnailUrl()
+    public function getThumbnailUrl()
     {
         return $this->thumbnailUrl;
     }
@@ -229,12 +228,13 @@ class Youtube
      * Delete a YouTube video by it's ID.
      *
      * @param  int  $id
-     *
      * @return bool
      */
     public function delete($id)
     {
-        if ( ! $this->exists($id)) return false;
+        if (! $this->exists($id)) {
+            return false;
+        }
 
         $this->youtube->videos->delete($id);
 
@@ -245,14 +245,15 @@ class Youtube
      * Check if a YouTube video exists by it's ID.
      *
      * @param  int  $id
-     *
      * @return bool
      */
     public function exists($id)
     {
         $response = $this->youtube->videos->listVideos('status', ['id' => $id]);
 
-        if (empty($response->items)) return false;
+        if (empty($response->items)) {
+            return false;
+        }
 
         return true;
     }
@@ -261,15 +262,13 @@ class Youtube
      * Pass method calls to the Google Client.
      *
      * @param  string  $method
-     * @param  array   $args
-     *
+     * @param  array  $args
      * @return mixed
      */
     public function __call($method, $args)
     {
         return call_user_func_array([$this->client, $method], $args);
     }
-
 
     public function channel(): \Google\Service\YouTube\MemberListResponse
     {
@@ -278,9 +277,6 @@ class Youtube
     }
 
     /**
-     * @param array $options
-     * @param bool $toJson
-     * @return SearchListResponse|array
      * @throws Exception
      */
     public function search(array $options, bool $toJson = true): \Google\Service\YouTube\SearchListResponse|array
@@ -298,25 +294,29 @@ class Youtube
             $this->youtube->search->listSearch('snippet', array_filter($options));
     }
 
-    public function searchPlaylists(array $options, bool $toJson = true){
+    public function searchPlaylists(array $options, bool $toJson = true)
+    {
         $options = array_merge([
             'id' => '', // Return the playlists with the given IDs for Stubby or
             'channelId' => '', //Return the playlists owned by the specified
             'maxResults' => '50',
         ], $options);
+
         return $toJson ? $this->youtube->playlists->listPlaylists('snippet', array_filter($options))->getItems() :
             $this->youtube->playlists->listPlaylists('snippet', array_filter($options));
     }
-    public function searchChannels(array $options,  bool $toJson = true){
+
+    public function searchChannels(array $options, bool $toJson = true)
+    {
         $options = array_merge([
             'categoryId' => '',
             'maxResults' => '50',
             'id' => '',
-        ],$options);
+        ], $options);
+
         return $toJson ? $this->youtube->channels
             ->listChannels('snippet', array_filter($options))->getItems() :
             $this->youtube->channels
                 ->listChannels('snippet', array_filter($options));
     }
-
 }

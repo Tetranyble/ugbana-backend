@@ -39,6 +39,7 @@ trait TokenService
 
         return $token;
     }
+
     /**
      * Handle the Access token.
      */
@@ -58,6 +59,7 @@ trait TokenService
             $this->renew($newAccessToken);
         }
     }
+
     protected function renew(array $data)
     {
         return $this->update([
@@ -83,12 +85,10 @@ trait TokenService
             $this->refreshToken();
         }
         $this->setAccessToken();
+
         return $this->token;
     }
 
-    /**
-     * @return Client
-     */
     protected function setAccessToken(): Client
     {
         $this->getService();

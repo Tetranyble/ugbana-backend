@@ -7,11 +7,11 @@ use Google_Service_Oauth2;
 
 class Profile
 {
-    /** @var Client  */
     protected Client $client;
 
-    /** @var Client  */
-    protected  $profile;
+    /** @var Client */
+    protected $profile;
+
     public function __construct(Client $client)
     {
         $this->client = $client;
@@ -21,23 +21,26 @@ class Profile
 
     }
 
-    public function profile(){
+    public function profile()
+    {
         return $this->profile->userinfo->get();
     }
 
-    public function id(){
+    public function id()
+    {
         return $this->profile->userinfo->get()->id;
     }
 
-    public function email(){
+    public function email()
+    {
         return $this->profile->userinfo->get()->email;
     }
+
     /**
      * Pass method calls to the Google Client.
      *
      * @param  string  $method
-     * @param  array   $args
-     *
+     * @param  array  $args
      * @return mixed
      */
     public function __call($method, $args)

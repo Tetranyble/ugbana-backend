@@ -17,7 +17,7 @@ trait WithAttribute
         ]);
     }
 
-    public function referredBy(string|User $username = null): bool|ModelNotFoundException
+    public function referredBy(string|User|null $username = null): bool|ModelNotFoundException
     {
         return ($username instanceof User) ?
             $this->update([

@@ -40,14 +40,17 @@ class ProfileDocumentController extends Controller
      *    @OA\RequestBody(
      *         description="Created user resume",
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
      *             example={
      *                 "resume": "Ugbanawaji",
      *             },
+     *
      *             @OA\Schema(ref="#/components/schemas/ResumeRequest")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=201,
      *         description="The user rehydrated profile record is return with affected fields.",
@@ -97,8 +100,9 @@ class ProfileDocumentController extends Controller
         $profile = $user->profile()->create([
             'skills' => $resume->skills,
             'education' => $resume->education,
-            'job_experience' => $resume->experience
+            'job_experience' => $resume->experience,
         ]);
+
         return $this->created(
             new UserProfileResource($profile),
             'success'

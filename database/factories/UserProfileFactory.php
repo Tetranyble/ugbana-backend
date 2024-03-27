@@ -31,7 +31,7 @@ class UserProfileFactory extends Factory
                 'description' => 'description',
 
             ],
-            'skills' => ['Devops', 'php', 'laravel']
+            'skills' => ['Devops', 'php', 'laravel'],
         ];
     }
 }

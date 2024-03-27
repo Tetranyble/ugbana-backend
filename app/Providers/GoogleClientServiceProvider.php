@@ -40,10 +40,10 @@ class GoogleClientServiceProvider extends ServiceProvider
                 $client
             );
         });
-        $this->app->singleton(\App\Interface\Youtube::class, function (Application $app){
+        $this->app->singleton(\App\Interface\Youtube::class, function (Application $app) {
             return new Youtube($app->get(Client::class));
         });
-        $this->app->singleton(Profile::class, function (Application $app){
+        $this->app->singleton(Profile::class, function (Application $app) {
             return new Profile($app->get(Client::class));
         });
     }

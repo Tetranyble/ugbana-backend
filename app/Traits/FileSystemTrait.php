@@ -16,7 +16,7 @@ trait FileSystemTrait
 
     /**
      * @return string|bool - The full url of the file. for example:
-     * /Users/apple/Documents/projects/harde-server/storage/app/uploads/images/creativity-innovation.jpg
+     *                     /Users/apple/Documents/projects/harde-server/storage/app/uploads/images/creativity-innovation.jpg
      */
     public function getLocalFilePath(mixed $filename, string $path = 'uploads'): string|bool
     {

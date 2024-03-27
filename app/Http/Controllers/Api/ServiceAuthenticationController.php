@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Enums\StorageProvider;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WebServiceResource;
-use App\Models\User;
 use Google\Client;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ServiceAuthenticationController extends Controller
 {
@@ -42,7 +40,7 @@ class ServiceAuthenticationController extends Controller
                 'token' => $token,
                 'refresh_token' => $token['refresh_token'],
                 'client_id' => $client->id(),
-                'email' => $client->email()
+                'email' => $client->email(),
 
             ]);
 
@@ -51,5 +49,4 @@ class ServiceAuthenticationController extends Controller
             'success'
         );
     }
-
 }

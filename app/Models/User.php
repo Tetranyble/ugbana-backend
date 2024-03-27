@@ -12,7 +12,9 @@ use App\Traits\Thumbnail;
 use App\Traits\WithAttribute;
 use App\Traits\Youtubeable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,8 +23,8 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
-    use HasApiTokens, ApiMustVerify,HasFactory, Notifiable,
-        HasRoles, Youtubeable, Thumbnail, WithAttribute;
+    use ApiMustVerify, HasApiTokens,HasFactory, HasRoles,
+        Notifiable, Thumbnail, WithAttribute;
 
     /**
      * The attributes that are mass assignable.
@@ -78,7 +80,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             ->toResponse(app('request'))->getData(true);
     }
 
-    public function profile(){
+    public function profile()
+    {
         return $this->hasOne(
             UserProfile::class,
             'user_id'
@@ -92,7 +95,8 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
             'user_id'
         );
     }
-    public function service(): WebService|null
+
+    public function service(): Model|HasMany
     {
         return $this->webServices()
             ->where('name', StorageProvider::GOOGLE)
@@ -101,7 +105,6 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     /**
      * Get user's videos
-     * @return HasMany
      */
     public function videos(): HasMany
     {
@@ -110,10 +113,24 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     /**
      * Get channels
-     * @return HasMany
      */
     public function channels(): HasMany
     {
         return $this->hasMany(Channel::class, 'user_id');
+    }
+
+    public function scopeSearchs(Builder $builder, string $terms = null): Builder
+    {
+
+        return $builder->where(function ($builder) use ($terms) {
+            collect(explode(' ', $terms))->filter()->each(function ($term) use ($builder) {
+                $term = '%'.$term.'%';
+                $builder->orWhere('firstname', 'like', $term)
+                    ->orWhere('lastname', 'like', $term)
+                    ->orWhere('email', 'like', $term)
+                    ->orWhere('middlename', 'like', $term)
+                    ->orWhere('id', $term);
+            });
+        });
     }
 }

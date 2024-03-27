@@ -39,12 +39,11 @@ class ChannelVideo extends Model
     protected $casts = [
         'thumbnail' => 'array',
         'tag' => 'array',
-        'published_at' => 'datetime'
+        'published_at' => 'datetime',
     ];
 
     /**
      * Get owner
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -53,7 +52,6 @@ class ChannelVideo extends Model
 
     /**
      * Get channel
-     * @return BelongsTo
      */
     public function channel(): BelongsTo
     {

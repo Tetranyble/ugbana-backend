@@ -4,38 +4,27 @@ namespace App\Traits;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 
 trait HasRoles
 {
     /**
      * A user may have multiple roles.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+        return $this->belongsToMany(
+            Role::class,
+            'role_user'
+        )->withTimestamps();
     }
 
     /**
-     * Determine if the user has the given role.
-     *
-     * @param  mixed  $role
-     * @return bool
+     * Check for the given user roles
      */
-    public function hasRole($role)
+    public function hasRoles($roles): bool
     {
-        if (is_string($role)) {
-            return $this->roles->contains('name', $role);
-        }
-
-        return (bool) $role->intersect($this->roles)->count();
-    }
-
-    public function hasRoles($roles)
-    {
-
         if (is_array($roles)) {
             return (bool) $this->roles()->whereIn('name', $roles)
                 ->orWhereIn('label', $roles)->count();
@@ -48,10 +37,12 @@ trait HasRoles
         return ($roles instanceof Collection) ?
             (bool) $this->roles->intersect($roles)->count() :
             (bool) $this->roles->intersect(collect([$roles]))->count();
-
     }
 
-    public function assignRoles(...$roles)
+    /**
+     * @return array|array[]|Collection
+     */
+    public function assignRoles(...$roles): array|Collection
     {
 
         return array_map(function ($role) {
@@ -64,11 +55,44 @@ trait HasRoles
                 );
             }
 
+            if (is_int($role)) {
+                return $this->roles()->sync($role, false);
+            }
+
             return ($role instanceof Collection) ?
 
                 $role->map(fn ($r) => $this->roles()->sync($r, false)) :
 
                 $this->roles()->sync($role, false);
+
+        }, $roles);
+    }
+
+    /**
+     * @return array|array[]|Collection
+     */
+    public function removeRoles(...$roles): mixed
+    {
+
+        return array_map(function ($role) {
+
+            if (is_string($role)) {
+                return $this->roles()->detach(
+                    Role::where('name', $role)
+                        ->orWhere('label', $role)->first(),
+                    false
+                );
+            }
+
+            if (is_int($role)) {
+                return $this->roles()->detach($role, false);
+            }
+
+            return ($role instanceof Collection) ?
+
+                $role->map(fn ($r) => $this->roles()->detach($r, false)) :
+
+                $this->roles()->detach($role, false);
 
         }, $roles);
     }
@@ -100,7 +124,7 @@ trait HasRoles
      *
      * @return Collection $permission
      */
-    public function permissions()
+    public function permissions(): Collection
     {
         return collect([
             ...$this->roles->map->permissions->flatten()->pluck('name')->unique(),
@@ -109,12 +133,21 @@ trait HasRoles
         ]);
     }
 
-    public function userPermissions()
+    /**
+     * Gets all user permissions
+     */
+    public function userPermissions(): BelongsToMany
     {
-        return $this->belongsToMany(Permission::class, 'permission_users')->withTimestamps();
+        return $this->belongsToMany(
+            Permission::class,
+            'permission_user'
+        )->withTimestamps();
     }
 
-    public function assignPermissions(...$permissions)
+    /**
+     * @return array|array[]|Collection
+     */
+    public function assignPermissions(...$permissions): array|Collection
     {
         return array_map(function ($permission) {
 

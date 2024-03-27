@@ -4,7 +4,8 @@ namespace App\services;
 
 class Segments
 {
-    public function education(){
+    public function education()
+    {
         return [
             'education',
             'school',
@@ -18,18 +19,20 @@ class Segments
         ];
     }
 
-    public function degree(){
+    public function degree()
+    {
         return [
             'bachelor',
             "bachelor's",
             'masters',
             'master',
             "master's",
-            "doctoral",
+            'doctoral',
         ];
     }
 
-    public function experience(){
+    public function experience()
+    {
         return [
             'employment history',
             'employment',
@@ -39,11 +42,12 @@ class Segments
             'professional background',
             'industry experience',
             'experience',
-            'career history'
+            'career history',
         ];
     }
 
-    public function skill(){
+    public function skill()
+    {
         return [
             'credentials',
             'areas of experience',
@@ -64,7 +68,8 @@ class Segments
         ];
     }
 
-    public function project(){
+    public function project()
+    {
         return [
             'academic projects',
             'personal projects',
@@ -74,7 +79,8 @@ class Segments
         ];
     }
 
-    public function accomplishment(){
+    public function accomplishment()
+    {
         return [
             'licenses',
             'presentations',
@@ -109,5 +115,4 @@ class Segments
             'honors',
         ];
     }
-
 }

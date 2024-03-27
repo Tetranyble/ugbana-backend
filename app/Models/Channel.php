@@ -28,7 +28,7 @@ class Channel extends Model
         'url',
         'is_viable',
         'subscriber_count',
-        'channel_user_id'
+        'channel_user_id',
     ];
 
     protected $casts = [
@@ -40,24 +40,22 @@ class Channel extends Model
 
     /**
      * Channel owned
-     * @return bool
      */
-    public function isOwned(): bool{
+    public function isOwned(): bool
+    {
         return $this->is_owner;
     }
 
     /**
      * Channel viable
-     * @return bool
      */
-    public function isViable(): bool{
+    public function isViable(): bool
+    {
         return $this->is_viable;
     }
 
-
     /**
      * Get channel's owner
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -66,7 +64,6 @@ class Channel extends Model
 
     /**
      * Get channel's videos
-     * @return HasMany
      */
     public function videos(): HasMany
     {
@@ -75,7 +72,6 @@ class Channel extends Model
 
     /**
      * Get Channel client profile
-     * @return HasOneThrough
      */
     public function client(): HasOneThrough
     {

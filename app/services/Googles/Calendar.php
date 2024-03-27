@@ -5,8 +5,8 @@ namespace App\Services\Googles;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
-use \Google\Client;
-use \Google_Service_Calendar;
+use Google\Client;
+use Google_Service_Calendar;
 
 class Calendar
 {

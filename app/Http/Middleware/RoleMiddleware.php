@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RoleMiddleware
 {
@@ -12,13 +13,10 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, $roles = null): Response
     {
-
-        //$guard = $request->wantsJson() ? 'api' : 'web';
-
-        if (auth('api')->check() && auth('api')->user()->hasRoles($roles)) {
-
+        $guard = $request->wantsJson() ? 'api' : 'web';
+        if (auth($guard)->check() && auth($guard)->user()->hasRoles($roles)) {
             return $next($request);
         }
 

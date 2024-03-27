@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,4 +69,17 @@ Route::name('v1.')->prefix('v1')->group(function () {
     Route::get('users/profile', \App\Http\Controllers\Api\ProfileController::class)
         ->middleware('auth:api')
         ->name('users.profile');
+    Route::middleware('roles:manager')->name('admin.')->prefix('admin')->group(function () {
+        Route::post('employee', [\App\Http\Controllers\Admin\EmployeeController::class, 'store'])
+            ->name('employee.store');
+        Route::patch('employee/{user:id}', [\App\Http\Controllers\Admin\EmployeeController::class, 'update'])
+            ->name('employee.update');
+        Route::get('employee', [\App\Http\Controllers\Admin\EmployeeController::class, 'index'])
+            ->name('employee.index');
+        Route::get('employee/{user:id}', [\App\Http\Controllers\Admin\EmployeeController::class, 'show'])
+            ->name('employee.show');
+
+        Route::delete('employee/{user:id}', [\App\Http\Controllers\Admin\EmployeeController::class, 'destroy'])
+            ->name('employee.destroy');
+    });
 });

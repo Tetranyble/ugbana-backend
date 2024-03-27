@@ -150,7 +150,7 @@ trait ApiResponse
     /**
      * Respond with error.
      */
-    protected function respondError($message, int $statusCode = 400, Exception $exception = null): JsonResponse
+    protected function respondError($message, int $statusCode = 400, ?Exception $exception = null): JsonResponse
     {
         return $this->apiResponse(
             [

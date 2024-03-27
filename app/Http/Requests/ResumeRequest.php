@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * @OA\Schema(schema="ResumeRequest")
  * {
+ *
  *   @OA\Property(
  *       property="resume",
  *       type="file",
@@ -32,7 +33,7 @@ class ResumeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'resume' => 'required|mimes:pdf|max:10240'
+            'resume' => 'required|mimes:pdf|max:10240',
         ];
     }
 }

@@ -7,13 +7,11 @@ use App\Models\ChannelVideo;
 use App\services\Google\Profile;
 use App\services\Google\Youtube;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 trait Youtubeable
 {
     protected Youtube $youtube;
-
 
     protected function getYoutubeInstance(): void
     {
@@ -25,38 +23,41 @@ trait Youtubeable
         }
     }
 
-    public function search(array $options = ['q' => '', 'channelId' => '']){
+    public function search(array $options = ['q' => '', 'channelId' => ''])
+    {
         return $this->youtube
             ->search($options, true);
     }
 
-    public function channel(array $options = ['id' => '','categoryId' => '']){
+    public function channel(array $options = ['id' => '', 'categoryId' => ''])
+    {
         return $this->youtube
             ->searchChannels($options, true);
     }
-    public function playlists(array $options = ['id' => '', 'channelId' => '']){
+
+    public function playlists(array $options = ['id' => '', 'channelId' => ''])
+    {
         return $this->youtube
             ->searchChannels($options, true);
     }
 
     /**
      * Store channels lists
-     * @param string $channels
-     * @return Collection
      */
     public function storeChannels(string $channels): Collection
     {
         $this->getYoutubeInstance();
         $channels = $this->channel([
-            'id' => $channels
+            'id' => $channels,
         ]);
+
         return collect($channels)
-            ->map(function ($c){
+            ->map(function ($c) {
                 return $this->channels()
                     ->updateOrCreate([
                         'uuid' => $c->id,
-                        'user_id' => $this->id
-                    ],[
+                        'user_id' => $this->id,
+                    ], [
                         'title' => $c->snippet->title,
                         'etag' => $c->etag,
                         'kind' => $c->kind,
@@ -75,37 +76,35 @@ trait Youtubeable
     public function storeSearch(array $options = [
         'q' => '',
         'type' => 'video',
-    ], bool $toJon = true){
+    ], bool $toJon = true)
+    {
 
         $this->getYoutubeInstance();
         $results = $this->youtube
             ->search($options, $toJon);
+
         return collect($results)
-            ->map(function ($c){
+            ->map(function ($c) {
                 $channel = $this->channels()
                     ->updateOrCreate([
                         'uuid' => $c->snippet->channelId,
-                        'user_id' => $this->id
-                    ],[
+                        'user_id' => $this->id,
+                    ], [
                         'title' => $c->snippet->channelTitle,
                         'url' => 'https://www.youtube.com/channel/'.$c->snippet->channelId,
                     ]);
                 $this->storeVideo($channel, $c);
+
                 return $channel->fresh()->load('videos');
             });
     }
 
-    /**
-     * @param Channel $channel
-     * @param mixed $video
-     * @return Model
-     */
     public function storeVideo(Channel $channel, mixed $video): Model
     {
         return $this->videos()
             ->updateOrCreate([
-                'uuid' => $video->id->videoId
-            ],[
+                'uuid' => $video->id->videoId,
+            ], [
                 'etag' => $video->etag,
                 'kind' => $video->id->kind,
                 'playlist_id' => $video->id->playlistId,
@@ -119,13 +118,14 @@ trait Youtubeable
             ]);
     }
 
-    public function upload(ChannelVideo $video){
+    public function upload(ChannelVideo $video)
+    {
         $this->getYoutubeInstance();
-        $this->youtube->upload($video->filename,[
+        $this->youtube->upload($video->filename, [
             'title' => $video->title,
             'description' => $video->description,
             'tags' => $video->tag,
-            'category_id' => $video?->category
+            'category_id' => $video?->category,
         ]);
     }
 
@@ -136,20 +136,24 @@ trait Youtubeable
             ->first();
     }
 
-    public function id(){
+    public function id()
+    {
         return $this->profile->id();
     }
 
-    public function getClientId(mixed $token){
+    public function getClientId(mixed $token)
+    {
         $profile = app(Profile::class);
         $profile->setAccessToken($token);
+
         return $profile->id();
     }
 
-    public function getClient(mixed $token){
+    public function getClient(mixed $token)
+    {
         $profile = app(Profile::class);
         $profile->setAccessToken($token);
+
         return $profile;
     }
-
 }

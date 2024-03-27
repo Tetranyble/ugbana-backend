@@ -36,7 +36,6 @@ return new class extends Migration
             $table->string('artist')->nullable();
             $table->text('filename')->nullable();
 
-
             $table->unsignedBigInteger('channel_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();

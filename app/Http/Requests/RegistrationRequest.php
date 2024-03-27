@@ -60,6 +60,7 @@ class RegistrationRequest extends FormRequest
         }
         $this->merge(['username' => Str::uuid()->toString().'-'.time()]);
     }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -81,6 +82,7 @@ class RegistrationRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'referrer' => ['nullable', 'string', 'exists:users,username'],
+            'role' => 'nullable|string',
         ];
     }
 }

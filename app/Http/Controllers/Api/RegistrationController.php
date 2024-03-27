@@ -7,10 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Permission;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class RegistrationController extends Controller
 {
@@ -67,8 +65,6 @@ class RegistrationController extends Controller
      * )
      *
      *  Store a newly created resource in storage.
-     *
-     * @return JsonResponse
      */
     public function __invoke(RegistrationRequest $request): JsonResponse
     {
@@ -77,15 +73,17 @@ class RegistrationController extends Controller
         event(new ApiRegistered($user));
 
         $user->assignRoles('user');
+
         return $this->created(
             new UserResource($user),
             'Please verify your email address'
         );
     }
 
-    public function assignPermission(User $user,array $perms){
+    public function assignPermission(User $user, array $perms)
+    {
 
-        if ($permissions = Permission::whereIn('name', $perms)->get()){
+        if ($permissions = Permission::whereIn('name', $perms)->get()) {
             $user->assignPermissions($permissions);
         }
 

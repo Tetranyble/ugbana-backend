@@ -22,10 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /**
-         * @param $data array
-         * @param $message string
-         * @param $status_code int
-         * @param $status bool
+         * @param  $data  array
+         * @param  $message  string
+         * @param  $status_code  int
+         * @param  $status  bool
          * @return JsonResource
          */
         Response::macro('success', function ($data, $message, $status_code = 200, $headers = []) {
@@ -37,10 +37,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /**
-         * @param $data array
-         * @param $message string
-         * @param $status_code int
-         * @param $status bool
+         * @param  $data  array
+         * @param  $message  string
+         * @param  $status_code  int
+         * @param  $status  bool
          * @return JsonResource
          */
         Response::macro('error', function (
@@ -56,10 +56,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         /**
-         * @param $data array
-         * @param $message string
-         * @param $status_code int
-         * @param $status bool
+         * @param  $data  array
+         * @param  $message  string
+         * @param  $status_code  int
+         * @param  $status  bool
          * @return JsonResource
          */
         Response::macro('aborts', function (

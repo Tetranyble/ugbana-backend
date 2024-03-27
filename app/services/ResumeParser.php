@@ -5,7 +5,6 @@ namespace App\services;
 use App\Interface\ResumeParserInterface;
 use GuzzleHttp\Client;
 
-
 class ResumeParser extends Client implements ResumeParserInterface
 {
     protected string $key;
@@ -39,7 +38,6 @@ class ResumeParser extends Client implements ResumeParserInterface
         );
     }
 
-
     /**
      * Send request to the endpoint
      *
@@ -57,7 +55,7 @@ class ResumeParser extends Client implements ResumeParserInterface
                     'headers' => [
                         'apikey' => $this->key,
                         'Content-Type' => 'text/plain',
-                        'Accept'     => 'application/json'
+                        'Accept' => 'application/json',
                     ],
                 ]
             )
@@ -87,5 +85,4 @@ class ResumeParser extends Client implements ResumeParserInterface
     {
         return json_decode($response->getContents());
     }
-
 }

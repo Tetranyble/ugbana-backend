@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\ChannelVideo;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -45,7 +44,8 @@ class DownloadYoutube implements ShouldQueue
         YoutubeUpload::dispatch($this->video);
     }
 
-    public function record($collection){
+    public function record($collection)
+    {
         foreach ($collection->getVideos() as $video) {
             if ($video->getError() !== null) {
                 Log::error("Error downloading video: {$video->getError()}.");

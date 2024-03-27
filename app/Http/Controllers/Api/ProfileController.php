@@ -17,9 +17,11 @@ class ProfileController extends Controller
      * summary="The authenticated user resources",
      * security={ * {"sanctum": {} } * },
      * description="The authenticated user resources.",
+     *
      *     @OA\Response(
      *         response=200,
      *         description="The authenticated user resources.",
+     *
      *         @OA\JsonContent(
      *             type="object",
      *             example={
@@ -34,6 +36,7 @@ class ProfileController extends Controller
      *             }
      *         )
      *     ),
+     *
      *    @OA\Response(response=400, ref="#/components/responses/400"),
      *    @OA\Response(response=403, ref="#/components/responses/403"),
      *    @OA\Response(response=404, ref="#/components/responses/404"),
@@ -43,7 +46,6 @@ class ProfileController extends Controller
      *
      * Get the authenticated user resource in storage.
      *
-     * @param  Request  $request
      * @param  User  $user
      * @return \Illuminate\Http\JsonResponse
      */
