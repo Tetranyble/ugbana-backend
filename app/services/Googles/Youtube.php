@@ -1,6 +1,6 @@
 <?php
 
-namespace App\services\Google;
+namespace App\services\Googles;
 
 use App\Enums\StorageProvider;
 use App\Models\Channel;

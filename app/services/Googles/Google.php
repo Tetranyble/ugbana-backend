@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Services\Google;
+namespace App\Services\Googles;
 
 use App\Models\WebService;
+use Google\Client;
 
 class Google
 {
