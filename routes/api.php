@@ -69,6 +69,8 @@ Route::name('v1.')->prefix('v1')->group(function () {
     Route::get('users/profile', \App\Http\Controllers\Api\ProfileController::class)
         ->middleware('auth:api')
         ->name('users.profile');
+
+
     Route::middleware('roles:manager')->name('admin.')->prefix('admin')->group(function () {
         Route::post('employee', [\App\Http\Controllers\Admin\EmployeeController::class, 'store'])
             ->name('employee.store');
@@ -81,5 +83,34 @@ Route::name('v1.')->prefix('v1')->group(function () {
 
         Route::delete('employee/{user:id}', [\App\Http\Controllers\Admin\EmployeeController::class, 'destroy'])
             ->name('employee.destroy');
+
+        //Roles
+        Route::get('roles', [\App\Http\Controllers\Admin\RoleController::class, 'index'])
+            ->name('roles.index')
+            ->middleware('permission.authorize:role_index');
+
+        Route::post('roles', [\App\Http\Controllers\Admin\RoleController::class, 'store'])
+            ->name('roles.store')
+            ->middleware('permission.authorize:role_store');
+
+        Route::patch('roles/{role:id}', [\App\Http\Controllers\Admin\RoleController::class, 'update'])
+            ->name('roles.update')
+            ->middleware(['permission.authorize:role_update', 'role.update']);
+
+        Route::get('roles/{role:id}', [\App\Http\Controllers\Admin\RoleController::class, 'show'])
+            ->name('roles.show')
+            ->middleware('permission.authorize:role_show');
+
+        Route::delete('roles/{role:id}', [\App\Http\Controllers\Admin\RoleController::class, 'destroy'])
+            ->name('roles.delete')
+            ->middleware(['permission.authorize:role_delete', 'role.update']);
+
+        Route::post('users/{user:id}/roles/attach', \App\Http\Controllers\Admin\AttachRoleToUserController::class)
+            ->name('users.roles.attach')
+            ->middleware(['permission.authorize:user_update', 'permission.authorize:user_store']);
+
+        Route::patch('users/{user:id}/roles/attach', \App\Http\Controllers\Admin\DetachRoleToUserController::class)
+            ->name('users.roles.deattach')
+            ->middleware(['permission.authorize:user_update']);
     });
 });

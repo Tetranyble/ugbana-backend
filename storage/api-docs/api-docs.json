@@ -351,6 +351,310 @@
                 ]
             }
         },
+        "/admin/roles": {
+            "get": {
+                "tags": [
+                    "Admin Roles"
+                ],
+                "summary": "The resource collection",
+                "description": "The resource collection",
+                "operationId": "Api/Admin/RoleController::index",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search the resource by name or description",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "quantity",
+                        "in": "query",
+                        "description": "The quantity",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The resource collection",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RoleResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/403"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin Roles"
+                ],
+                "summary": "Store Role resource.",
+                "description": "Store Role resource.",
+                "operationId": "Api/Admin/RoleController::store",
+                "requestBody": {
+                    "description": "Create new Role",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleRequest"
+                            },
+                            "example": {
+                                "name": "The name",
+                                "description": "The name"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": {
+                                        "name": "The program resource",
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/roles/{role}": {
+            "get": {
+                "tags": [
+                    "Admin Roles"
+                ],
+                "summary": "The role resource",
+                "description": "The role resource.",
+                "operationId": "Api/Admin/RoleController::show",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "description": "The role id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Admin Roles"
+                ],
+                "summary": "The role resource",
+                "description": "The role resource.",
+                "operationId": "Api/Admin/RoleController::destroy",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "description": "The role id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Admin Roles"
+                ],
+                "summary": "Store Role resource.",
+                "description": "Store Role resource.",
+                "operationId": "Api/Admin/RoleController::update",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "description": "The Role resource id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create new Role",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleRequest"
+                            },
+                            "example": {
+                                "name": "The name",
+                                "description": "The name"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "message": "success",
+                                    "status": true,
+                                    "data": {
+                                        "name": "The program resource",
+                                        "created_at": "2022-09-08T12:29:54.000000Z",
+                                        "updated_at": "2022-09-08T12:29:54.000000Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/400"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/404"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "default": {
+                        "$ref": "#/components/responses/500"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -1386,6 +1690,15 @@
                 },
                 "type": "object"
             },
+            "RoleRequest": {
+                "properties": {
+                    "name": {
+                        "description": "The role name.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "UpdateProfileRequest": {
                 "properties": {
                     "firstname": {
@@ -1435,6 +1748,27 @@
                     },
                     "other_value": {
                         "description": "Other channels the user heard about Harde.",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RoleResource": {
+                "properties": {
+                    "id": {
+                        "description": "The role id.",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "The role name.",
+                        "type": "string"
+                    },
+                    "label": {
+                        "description": "The role label.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "The role description.",
                         "type": "string"
                     }
                 },
