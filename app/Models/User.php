@@ -10,7 +10,6 @@ use App\Traits\ApiMustVerify;
 use App\Traits\HasRoles;
 use App\Traits\Thumbnail;
 use App\Traits\WithAttribute;
-use App\Traits\Youtubeable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -119,7 +118,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return $this->hasMany(Channel::class, 'user_id');
     }
 
-    public function scopeSearchs(Builder $builder, string $terms = null): Builder
+    public function scopeSearchs(Builder $builder, ?string $terms = null): Builder
     {
 
         return $builder->where(function ($builder) use ($terms) {

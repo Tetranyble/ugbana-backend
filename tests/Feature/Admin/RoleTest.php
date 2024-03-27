@@ -79,8 +79,8 @@ class RoleTest extends TestCase
         $response = $this->actingAs($this->user, 'api')
             ->patchJson(route('v1.admin.roles.update',
                 ['role' => $role->id]), [
-                'name' => 'Imperial',
-            ])
+                    'name' => 'Imperial',
+                ])
             ->assertStatus(200);
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('status')

@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class EmployeeTest extends TestCase
 {
-    use RefreshDatabase, PermissionSupport , WithFaker;
+    use PermissionSupport, RefreshDatabase , WithFaker;
 
     public function setUp(): void
     {
@@ -34,13 +34,13 @@ class EmployeeTest extends TestCase
 
         $response = $this->actingAs($this->user, 'api')
             ->postJson(route('v1.admin.employee.store'),
-            $user = User::factory()->raw([
-                'firstname' => 'Ugbanawaji',
-                'lastname' => 'Ekenekiso',
-                'password' => 'password',
-                'password_confirmation' => 'password',
-            ])
-        )->assertStatus(201);
+                $user = User::factory()->raw([
+                    'firstname' => 'Ugbanawaji',
+                    'lastname' => 'Ekenekiso',
+                    'password' => 'password',
+                    'password_confirmation' => 'password',
+                ])
+            )->assertStatus(201);
 
         $response->assertJson(fn (AssertableJson $json) => $json
             ->where('status', true)
@@ -81,7 +81,7 @@ class EmployeeTest extends TestCase
         $user = User::factory(50)->create();
         $response = $this->actingAs($this->user, 'api')
             ->getJson(route('v1.admin.employee.index'))
-                ->assertStatus(200);
+            ->assertStatus(200);
 
         $response->assertJson(fn (AssertableJson $json) => $json->has('status')
             ->has('message')
@@ -99,8 +99,8 @@ class EmployeeTest extends TestCase
     {
         $user = User::factory()->create();
         $response = $this->actingAs($this->user, 'api')
-            ->getJson(route('v1.admin.employee.show',[
-                'user' => $user->id
+            ->getJson(route('v1.admin.employee.show', [
+                'user' => $user->id,
             ]))
             ->assertStatus(200);
 
@@ -120,11 +120,10 @@ class EmployeeTest extends TestCase
     {
         $user = User::factory()->create();
         $response = $this->actingAs($this->user, 'api')
-            ->deleteJson(route('v1.admin.employee.destroy',[
-                'user' => $user->id
+            ->deleteJson(route('v1.admin.employee.destroy', [
+                'user' => $user->id,
             ]))
             ->assertStatus(204);
-
 
     }
 }

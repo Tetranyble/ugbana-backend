@@ -11,7 +11,6 @@ use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -52,6 +51,7 @@ class EmployeeController extends Controller
      *
      *         @OA\JsonContent(
      *             type="array",
+     *
      *             @OA\Items(ref="#/components/schemas/UserResource")
      *         )
      *     ),
@@ -162,10 +162,12 @@ class EmployeeController extends Controller
      *         in="path",
      *         description="The employee id",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="integer",
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="success",
@@ -204,6 +206,7 @@ class EmployeeController extends Controller
      * summary="Update employee profile",
      * security={ * {"sanctum": {} } * },
      * description="Update basic user informations.",
+     *
      *     @OA\Parameter(
      *          name="employeeId",
      *          in="path",
@@ -214,6 +217,7 @@ class EmployeeController extends Controller
      *              type="integer",
      *          )
      *      ),
+     *
      *    @OA\RequestBody(
      *         description="Update employee profile basic information.",
      *         required=false,
@@ -228,6 +232,7 @@ class EmployeeController extends Controller
      *                 "introduction" : "the quick brown fox profile update",
      *                 "email" : "l.ekenekiso@ugbanawaji.com",
      *             },
+     *
      *             @OA\Schema(ref="#/components/schemas/UpdateProfileRequest")
      *         )
      *     ),
@@ -295,10 +300,12 @@ class EmployeeController extends Controller
      *         in="path",
      *         description="The employee id",
      *         required=true,
+     *
      *         @OA\Schema(
      *             type="integer",
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="success",

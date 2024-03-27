@@ -31,7 +31,7 @@ class Role extends Model
         return $this->permissions()->sync($permission, false);
     }
 
-    public function scopeSearch(Builder $builder, string $terms = null)
+    public function scopeSearch(Builder $builder, ?string $terms = null)
     {
         $builder->where(function ($builder) use ($terms) {
             collect(explode(' ', $terms))->filter()->each(function ($term) use ($builder) {

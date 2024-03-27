@@ -70,7 +70,6 @@ Route::name('v1.')->prefix('v1')->group(function () {
         ->middleware('auth:api')
         ->name('users.profile');
 
-
     Route::middleware('roles:manager')->name('admin.')->prefix('admin')->group(function () {
         Route::post('employee', [\App\Http\Controllers\Admin\EmployeeController::class, 'store'])
             ->name('employee.store');
