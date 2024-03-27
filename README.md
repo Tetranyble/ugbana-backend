@@ -24,6 +24,7 @@ Another server [documentation](https://api.ugbanawaji.com/api/v1/documentation)
   `git pull https://github.com/Tetranyble/ugbana-backend.git`
 - Navigate into the repository and install project's dependencies:
   `cd ugbana-backend && composer install`
+  `php artisan test` This guarantees that everything is working as expected.
 - Next up migrate and seed the local development server:
   `php artisan migrate --seed`
 - Start the local development server if you're on window: `php artisan server`
@@ -35,6 +36,8 @@ This account has manager privillage to get start
 
 Note: Before starting the local development server ensure you have set up the database connection and the database server is up and running.
 
+
+#Happy hacking
 
 ## Contributing
 
