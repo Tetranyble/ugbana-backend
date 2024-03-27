@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('client_id')->nullable(); //google_id that's account ID
             $table->string('provider')->default(\App\Enums\StorageProvider::GOOGLE->value);
             $table->string('name')->nullable();
+            $table->string('email')->unique()->nullable();
 
             $table->foreign('user_id')
                 ->references('id')

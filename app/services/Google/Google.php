@@ -9,7 +9,7 @@ class Google
     /**
      * Google Client object
      *
-     * @var \Google_Client
+     * @var Client
      */
     protected $client;
 
@@ -20,7 +20,7 @@ class Google
      */
     public function __construct()
     {
-        $client = new \Google_Client();
+        $client = new Client();
 
         $client->setClientId(config('services.google.client_id'));
         $client->setClientSecret(config('services.google.client_secret'));

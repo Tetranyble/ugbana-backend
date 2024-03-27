@@ -19,18 +19,24 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 Artisan::command('youtube:download', function (){
     \App\Models\ChannelVideo::orderBy('id')
-        ->limit(5)
+        ->where('user_id', 1)
         ->chunkMap(function ($video){
             \App\Jobs\DownloadYoutube::dispatch($video);
-        });
+        },10);
+//    \App\Jobs\DownloadYoutube::dispatch(
+//        \App\Models\ChannelVideo::first()
+//    );
 
 });
 
 Artisan::command('youtube:upload', function (){
-    $videos = \App\Models\ChannelVideo::orderBy('id')
-        ->limit(5)->get();
-    $videos->map(function ($video){
-        \App\Jobs\YoutubeUpload::dispatch($video);
-    });
+//    $videos = \App\Models\ChannelVideo::orderBy('id')
+//        ->limit(5)->get();
+//    $videos->map(function ($video){
+//        \App\Jobs\YoutubeUpload::dispatch($video);
+//    });
+    \App\Jobs\YoutubeUpload::dispatch(
+        \App\Models\ChannelVideo::find(101)
+    );
 
 });

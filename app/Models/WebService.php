@@ -25,6 +25,7 @@ class WebService extends Model
         'provider',
         'client_id', // google_id
         'scopes',
+        'email',
     ];
 
     protected $casts = [

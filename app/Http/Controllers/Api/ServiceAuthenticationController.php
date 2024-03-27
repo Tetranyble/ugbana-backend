@@ -24,21 +24,16 @@ class ServiceAuthenticationController extends Controller
      */
     public function connect(Request $request)
     {
-        Auth::login(
-            User::where('email', 'movieswebbs@gmail.com')->first()
-        );
-
         return \redirect($this->client->createAuthUrl());
     }
 
     public function authorization(Request $request)
     {
+        $user = $request->user('web');
         $token = $this->client->fetchAccessTokenWithAuthCode(request('code'));
-        Auth::login(
-            User::where('email', 'movieswebbs@gmail.com')->first()
-        );
+        $client = $user->getClient($token);
 
-        $service = $request->user()
+        $service = $user
             ->webServices()
             ->updateOrCreate([
                 'name' => StorageProvider::GOOGLE,
@@ -46,7 +41,9 @@ class ServiceAuthenticationController extends Controller
                 'name' => StorageProvider::GOOGLE,
                 'token' => $token,
                 'refresh_token' => $token['refresh_token'],
-                'client_id' => \auth('web')->user()->getClientId($token)
+                'client_id' => $client->id(),
+                'email' => $client->email()
+
             ]);
 
         return $this->success(

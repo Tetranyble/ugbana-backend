@@ -27,7 +27,8 @@ class Channel extends Model
         'is_owner',
         'url',
         'is_viable',
-        'subscriber_count'
+        'subscriber_count',
+        'channel_user_id'
     ];
 
     protected $casts = [

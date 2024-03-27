@@ -146,4 +146,10 @@ trait Youtubeable
         return $profile->id();
     }
 
+    public function getClient(mixed $token){
+        $profile = app(Profile::class);
+        $profile->setAccessToken($token);
+        return $profile;
+    }
+
 }

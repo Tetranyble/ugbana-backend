@@ -42,6 +42,7 @@ class DownloadYoutube implements ShouldQueue
                 ->url($this->video->url)
         );
         $this->record($collection);
+        YoutubeUpload::dispatch($this->video);
     }
 
     public function record($collection){

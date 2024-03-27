@@ -102,8 +102,8 @@ class Youtube
         #. Build the request
         ------------------------------------ */
         $insert = $this->youtube->videos->insert('status,snippet', $video,[
-           //'onBehalfOfContentOwner' => $channel->user->service()?->client_id, //*Note:* This parameter is intended
-           //'onBehalfOfContentOwnerChannel' => $channel->uuid, // This parameter can only be
+           //'onBehalfOfContentOwner' => 'wwSX8QxQGf3hB3EDQdACzQ',//$channel->user->service()?->client_id, //*Note:* This parameter is intended
+           //'onBehalfOfContentOwnerChannel' => 'UCwwSX8QxQGf3hB3EDQdACzQ',//$channel->uuid, // This parameter can only be
         ]);
 
         /* ------------------------------------

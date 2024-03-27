@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://ugbanawaji.com/api/v1/documentation" target="_blank">
-        <img src="https://pensuh.com/assets/images/pensuh-web.png" alt="Pensuh Logo" width="400">
+        <img src="https://media.licdn.com/dms/image/C4D16AQGXE5mUQHQTQA/profile-displaybackgroundimage-shrink_200_800/0/1621539157957?e=1717027200&amp;v=beta&amp;t=Z7ztgmcfAUZ3vao5VXLbm9PMmqf7WUjBLl-LpN1VM2I" alt="Pensuh Logo" width="400">
     </a>
 </p>
 
@@ -8,7 +8,7 @@
 
 </p>
 
-## Ugbanawaji Play Ground
+## Job Backend Ugbanawaji Play Ground
 
 Ugbanawaji Play Ground is a collective of carefully curated programs designed and developed for learning Purposes.
 

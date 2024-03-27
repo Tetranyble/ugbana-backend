@@ -28,6 +28,10 @@ class Profile
     public function id(){
         return $this->profile->userinfo->get()->id;
     }
+
+    public function email(){
+        return $this->profile->userinfo->get()->email;
+    }
     /**
      * Pass method calls to the Google Client.
      *

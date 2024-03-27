@@ -15,12 +15,13 @@ class YoutubeUpload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $timeout = 14400;
     /**
      * Create a new job instance.
      */
     public function __construct(protected ChannelVideo $video)
     {
-        //
+        $this->onQueue('downloads');
     }
 
     /**

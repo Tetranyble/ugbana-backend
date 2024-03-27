@@ -61,19 +61,19 @@ return [
         //'service_redirect' => env('SERVICE_REDIRECT'),
         'service_redirect' => env('APP_URL').'/services/authorization/google',
         'scope' => [
-            'https://www.googleapis.com/auth/drive',
-            'https://www.googleapis.com/auth/drive.file',
+//            'https://www.googleapis.com/auth/drive',
+//            'https://www.googleapis.com/auth/drive.file',
             'https://www.googleapis.com/auth/userinfo.email',
             'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/calendar',
-            'https://www.googleapis.com/auth/calendar.events',
+//            'https://www.googleapis.com/auth/calendar',
+//            'https://www.googleapis.com/auth/calendar.events',
 
             'https://www.googleapis.com/auth/youtube',
             'https://www.googleapis.com/auth/youtube.upload',
             'https://www.googleapis.com/auth/youtube.readonly',
             'https://www.googleapis.com/auth/youtube.channel-memberships.creator',
-
-            'https://www.googleapis.com/auth/youtubepartner',
+//
+//            'https://www.googleapis.com/auth/youtubepartner',
             //'https://www.googleapis.com/auth/youtube.force-ssl',
         ],
         // Enables automatic token refresh.
